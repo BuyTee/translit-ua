@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Транслітерація</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f7f8;
+      margin: 0;
+      padding: 16px;
+    }
+    h2 {
+      margin-bottom: 0;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      resize: vertical;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+      padding: 8px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      padding: 24px;
+    }
+    .desc {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    a {
+      color: #2973ca;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Варіант 8</h2>
+    <div class="desc">
+      Створити JavaScript «Транслітерація», який перетворює український текст за правилом транслітерації:<br>
+      Друкуючи у верхньому текстовому полі український текст, користувач отримує в нижньому полі перетворений текст. (
+      <a href="https://uk.wikipedia.org/wiki/Транслітерація_українського_алфавіту_латиницею_2010" target="_blank">Правила транслітерації</a>
+      )
+    </div>
+    <label for="ukrText">Український текст:</label>
+    <textarea id="ukrText" placeholder="Введіть текст українською...">Слово</textarea>
+    <label for="latText">Транслітерація:</label>
+    <textarea id="latText" readonly>Slovo</textarea>
+  </div>
+  <script>
+    // Таблиця транслітерації (найпростіша версія, без всіх нюансів!)
+    const map = {
+      'А':'A','а':'a', 'Б':'B','б':'b', 'В':'V','в':'v', 'Г':'H','г':'h', 'Ґ':'G','ґ':'g',
+      'Д':'D','д':'d', 'Е':'E','е':'e', 'Є':'Ye','є':'ie', 'Ж':'Zh','ж':'zh', 'З':'Z','з':'z',
+      'И':'Y','и':'y', 'І':'I','і':'i', 'Ї':'Yi','ї':'i', 'Й':'Y','й':'i', 'К':'K','к':'k',
+      'Л':'L','л':'l', 'М':'M','м':'m', 'Н':'N','н':'n', 'О':'O','о':'o', 'П':'P','п':'p',
+      'Р':'R','р':'r', 'С':'S','с':'s', 'Т':'T','т':'t', 'У':'U','у':'u', 'Ф':'F','ф':'f',
+      'Х':'Kh','х':'kh', 'Ц':'Ts','ц':'ts', 'Ч':'Ch','ч':'ch', 'Ш':'Sh','ш':'sh',
+      'Щ':'Shch','щ':'shch', 'Ю':'Yu','ю':'iu', 'Я':'Ya','я':'ia', "Ь":"",'ь':'', '’':'', "'":''
+    };
+    function transliterate(text) {
+      // Простий посимвольний прохід
+      return text.split('').map(char => map[char] !== undefined ? map[char] : char).join('');
+    }
+    const ukrText = document.getElementById('ukrText');
+    const latText = document.getElementById('latText');
+    function updateTranslit() {
+      latText.value = transliterate(ukrText.value);
+    }
+    ukrText.addEventListener('input', updateTranslit);
+    // Ініціалізуємо на старті
+    updateTranslit();
+  </script>
+</body>
+</html>
